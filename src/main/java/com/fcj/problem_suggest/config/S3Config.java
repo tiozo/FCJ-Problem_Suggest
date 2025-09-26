@@ -13,13 +13,13 @@ import software.amazon.awssdk.services.s3.S3Client;
 @ConditionalOnProperty(name = "storage.type", havingValue = "s3")
 public class S3Config {
     
-    @Value("${AWS_REGION:us-east-1}")
+    @Value("${aws.region}")
     private String region;
     
-    @Value("${AWS_ACCESS_KEY_ID}")
+    @Value("${aws.accessKeyId}")
     private String accessKeyId;
     
-    @Value("${AWS_SECRET_ACCESS_KEY}")
+    @Value("${aws.secretKey}")
     private String secretAccessKey;
     
     @Bean

@@ -123,3 +123,43 @@
 .actions-spacer {
     flex-grow: 1;
 }
+
+/* Thêm vào cuối file frontend/src/pages/UploadPage.css */
+.progress-bar-container {
+    width: 100%;
+    background-color: var(--header-border);
+    border-radius: 8px;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    transition: width 0.4s ease;
+}
+
+.action-btn.process {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    opacity: 1;
+}
+
+.action-btn.process:hover {
+    background-color: var(--primary-color);
+    opacity: 0.9;
+}
+
+/* Style cho khu vực thông báo trạng thái */
+.status-message {
+    margin-top: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.8;
+}

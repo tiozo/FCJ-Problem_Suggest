@@ -34,3 +34,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Bỏ qua các file cấu hình local chứa key bí mật
+application-local.properties

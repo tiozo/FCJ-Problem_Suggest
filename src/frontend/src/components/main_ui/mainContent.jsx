@@ -1,4 +1,5 @@
 // frontend/src/pages/UploadPage.jsx
+import { uploadFile } from '../../api/apiClient';
 import React, { useState } from 'react';
 import UploadPanel from './uploadPane';
 import '../styles/mainContent.css';
@@ -9,10 +10,39 @@ const FileIcon = () => <svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v1
 const UploadPage = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const [statusMessage, setStatusMessage] = useState('');
+    const [uploadProgress, setUploadProgress] = useState(0); // State mới để lưu tiến trình
 
     const handleFileSelect = (file) => {
         setSelectedFile(file);
         setIsPanelOpen(false);
+        setStatusMessage('');
+        setUploadProgress(0); // Reset tiến trình khi chọn file mới
+    };
+
+    const handleProcessFile = async () => {
+        if (!selectedFile) {
+            setStatusMessage('Vui lòng chọn một file để xử lý.');
+            return;
+        }
+
+        setStatusMessage(`Đang tải lên file: ${selectedFile.name}...`);
+
+        try {
+            // Sử dụng hàm uploadFile từ apiClient
+            const response = await uploadFile(selectedFile, (progressEvent) => {
+                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                setUploadProgress(percentCompleted); // Cập nhật tiến trình
+            });
+
+            console.log('Phản hồi từ server:', response.data);
+            setStatusMessage('Tải lên thành công! Bắt đầu xử lý trên backend...');
+
+        } catch (error) {
+            console.error('Lỗi khi tải file:', error);
+            setStatusMessage('Lỗi khi tải file. Vui lòng kiểm tra console.');
+            setUploadProgress(0); // Reset tiến trình khi có lỗi
+        }
     };
 
     return (
@@ -23,15 +53,12 @@ const UploadPage = () => {
                     <h1 className="main-title">PDF Statement Tagger</h1>
                 </div>
 
-                {/* --- Thay đổi Bắt đầu --- */}
-                {/* Thanh Upload chính bây giờ là một thẻ input thực sự */}
                 <input
                     type="text"
                     className="upload-bar-input"
-                    placeholder="Enter what you want to process or know about"
+                    placeholder="Nhập ghi chú hoặc mô tả cho file (tùy chọn)..."
                 />
 
-                {/* Khu vực mới để hiển thị file đã chọn */}
                 {selectedFile && (
                     <div className="selected-file-display">
                         <FileIcon />
@@ -45,23 +72,22 @@ const UploadPage = () => {
                         </button>
                     </div>
                 )}
-                {/* --- Thay đổi Kết thúc --- */}
 
-                {/* Khu vực các nút bấm bên dưới thanh upload */}
                 <nav className="actions-bar">
-                    <button className="action-btn">Natural Language</button>
-                    <button className="action-btn">Math Input</button>
+                    {/* Nút này bây giờ sẽ kích hoạt việc xử lý file */}
+                    <button className="action-btn process" onClick={handleProcessFile}>
+                        Process Document
+                    </button>
                     <div className="actions-spacer"></div>
-                    <button className="action-btn">Extended Keyboard</button>
-                    <button className="action-btn">Examples</button>
                     <button className="action-btn active" onClick={() => setIsPanelOpen(!isPanelOpen)}>
                         <UploadBarIcon />
                         Upload
                     </button>
-                    <button className="action-btn">Random</button>
                 </nav>
 
-                {/* Hiển thị UploadPanel có điều kiện */}
+                {/* Hiển thị thông báo trạng thái */}
+                {statusMessage && <p className="status-message">{statusMessage}</p>}
+
                 {isPanelOpen &&
                     <UploadPanel
                         onFileSelect={handleFileSelect}
