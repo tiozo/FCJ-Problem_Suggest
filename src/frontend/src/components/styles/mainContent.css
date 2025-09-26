@@ -1,0 +1,125 @@
+/* frontend/src/pages/UploadPage.css */
+.upload-page-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    padding: 4rem 2rem 2rem 2rem;
+}
+
+.upload-content {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+}
+
+.title-area {
+    margin-bottom: 1.5rem;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+/* --- Style cho thanh input mới --- */
+.upload-bar-input {
+    width: 100%; /* Đảm bảo input chiếm hết chiều rộng */
+    border: 1px solid var(--header-border);
+    border-radius: 8px;
+    background-color: var(--header-bg);
+    padding: 1.25rem 1.5rem;
+    transition: all 0.2s ease-in-out;
+    min-height: 70px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.upload-bar-input::placeholder {
+    color: var(--text-color);
+    opacity: 0.5;
+}
+
+.upload-bar-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(246, 141, 46, 0.2); /* Hiệu ứng "glow" */
+}
+
+/* --- Style cho khu vực hiển thị file đã chọn --- */
+.selected-file-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: var(--header-bg);
+    border: 1px solid var(--header-border);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    animation: fadeIn 0.3s ease;
+}
+
+.selected-file-display .file-icon {
+    flex-shrink: 0;
+}
+
+.selected-file-display .file-name {
+    font-weight: 600;
+}
+
+.clear-file-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.6;
+    padding: 0 0.5rem;
+}
+
+.clear-file-btn:hover {
+    opacity: 1;
+    color: var(--primary-color);
+}
+
+
+/* --- Thanh actions giữ nguyên --- */
+.actions-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.75rem;
+    padding: 0.25rem;
+    border: 1px solid var(--header-border);
+    border-radius: 8px;
+}
+.action-btn {
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-color);
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.action-btn:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+.action-btn.active {
+    opacity: 1;
+    border-color: var(--primary-color);
+}
+.action-btn svg { width: 16px; height: 16px; }
+.actions-spacer {
+    flex-grow: 1;
+}

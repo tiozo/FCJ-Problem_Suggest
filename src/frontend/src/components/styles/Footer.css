@@ -1,0 +1,8 @@
+/* frontend/src/components/Footer.css */
+.app-footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+}

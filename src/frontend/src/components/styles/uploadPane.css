@@ -1,0 +1,152 @@
+/* frontend/src/components/UploadPanel.css */
+.upload-panel-container {
+    background-color: var(--header-bg);
+    border: 1px solid var(--header-border);
+    border-radius: 8px;
+    margin-top: 1rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.upload-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--header-border);
+}
+
+.input-type-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    opacity: 0.6;
+}
+.input-type-btn.active {
+    opacity: 1;
+    border-bottom: 3px solid var(--primary-color);
+}
+.input-type-btn svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text-color);
+}
+
+.close-panel-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.6;
+}
+.close-panel-btn:hover { opacity: 1; }
+.close-panel-btn svg {
+    width: 14px;
+    height: 14px;
+    color: var(--text-color);
+}
+
+.upload-panel-body {
+    display: flex;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.upload-panel-left, .upload-panel-right {
+    flex: 1;
+}
+
+.upload-panel-left h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.panel-drop-zone {
+    border: 2px dashed var(--header-border);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--background-color);
+    transition: all 0.2s ease;
+}
+.panel-drop-zone.dragging {
+    border-color: var(--primary-color);
+    background-color: rgba(246, 141, 46, 0.05);
+}
+.panel-drop-zone svg { width: 32px; height: 32px; opacity: 0.5; }
+.panel-drop-zone span { font-weight: 600; }
+.panel-drop-zone small { opacity: 0.7; }
+
+.separator {
+    text-align: center;
+    margin: 1rem 0;
+    opacity: 0.5;
+}
+
+.url-input-group label {
+    display: block;
+    text-align: left;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+.url-input-wrapper {
+    display: flex;
+}
+.url-input-wrapper input {
+    flex-grow: 1;
+    border: 1px solid var(--header-border);
+    padding: 0.75rem;
+    border-radius: 6px 0 0 6px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+.url-input-wrapper button {
+    border: 1px solid var(--header-border);
+    border-left: none;
+    background-color: var(--background-color);
+    padding: 0 1rem;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.upload-panel-right h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    display: inline-block;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+.upload-panel-right p {
+    margin-top: 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.sample-images-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+.sample-image {
+    width: 100%;
+    padding-bottom: 100%; /* Tạo ô vuông */
+    background-color: var(--background-color);
+    border: 1px solid var(--header-border);
+    border-radius: 4px;
+}
