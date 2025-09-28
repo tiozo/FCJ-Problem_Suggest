@@ -26,7 +26,7 @@ public class S3StorageService implements StorageService {
     public void save(MultipartFile file) throws IOException {
         PutObjectRequest request = PutObjectRequest.builder()
             .bucket(bucketName)
-            .key(file.getOriginalFilename())
+            .key("input/" + file.getOriginalFilename())
             .contentType(file.getContentType())
             .build();
             
