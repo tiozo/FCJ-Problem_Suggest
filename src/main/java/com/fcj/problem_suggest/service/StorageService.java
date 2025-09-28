@@ -1,0 +1,9 @@
+package com.fcj.problem_suggest.service;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+public interface StorageService {
+    void save(MultipartFile file) throws IOException;
+}
