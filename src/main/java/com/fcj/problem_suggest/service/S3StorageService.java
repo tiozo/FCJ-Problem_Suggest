@@ -15,7 +15,7 @@ import java.io.IOException;
 public class S3StorageService implements StorageService {
     private final S3Client s3Client;
     
-    @Value("${aws.s3.bucket}")
+    @Value("${AWS_S3_BUCKET}")
     private String bucketName;
 
     public S3StorageService(S3Client s3Client) {
