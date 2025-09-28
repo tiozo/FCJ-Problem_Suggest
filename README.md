@@ -46,3 +46,9 @@ A project to help highschool student in study.
 	]
 }
 ```
+
+## .env FILE SETUP
+AWS_S3_BUCKET=<Your Bucket name>
+AWS_ACCESS_KEY_ID=<Your IAM access key>
+AWS_SECRET_ACCESS_KEY=<Your IAM Secret key>
+AWS_REGION=<Your Region setup>
