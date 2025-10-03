@@ -1,5 +1,6 @@
 package com.fcj.problem_suggest.controller;
 
+import com.fcj.problem_suggest.service.PdfSniper;
 import com.fcj.problem_suggest.service.StorageService;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,11 @@ import java.util.List;
 public class FileReceiver {
     private final Logger logger = org.slf4j.LoggerFactory.getLogger(FileReceiver.class);
     private final StorageService ss;
+    private final PdfSniper pdfSniper;
 
-    public FileReceiver (StorageService ss) {
+    public FileReceiver (StorageService ss, PdfSniper pdfSniper) {
         this.ss = ss;
+        this.pdfSniper = pdfSniper;
     }
 
     private static final List<String> ALLOWED_TYPES = Arrays.asList(
@@ -37,6 +40,7 @@ public class FileReceiver {
         
         try {
             ss.save(file);
+            pdfSniper.splitPdf(file);
             return ResponseEntity.status(HttpStatus.OK)
                 .body("Uploaded the file successfully: " + file.getOriginalFilename());
         } catch (Exception e) {

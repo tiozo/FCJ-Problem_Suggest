@@ -14,6 +14,8 @@ import java.io.IOException;
 @ConditionalOnProperty(name = "storage.type", havingValue = "s3")
 public class S3StorageService implements StorageService {
     private final S3Client s3Client;
+
+    private static final String FILE_PREFIX = "input/";
     
     @Value("${AWS_S3_BUCKET}")
     private String bucketName;
@@ -26,10 +28,26 @@ public class S3StorageService implements StorageService {
     public void save(MultipartFile file) throws IOException {
         PutObjectRequest request = PutObjectRequest.builder()
             .bucket(bucketName)
-            .key("input/" + file.getOriginalFilename())
+            .key(FILE_PREFIX + file.getOriginalFilename())
             .contentType(file.getContentType())
             .build();
             
         s3Client.putObject(request, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+    }
+
+    @Override
+    public void saveBytes(byte[] data, String fileName) throws IOException {
+        PutObjectRequest request = PutObjectRequest.builder()
+            .bucket(bucketName)
+            .key(FILE_PREFIX + fileName)
+            .contentType("application/pdf")
+            .build();
+            
+        s3Client.putObject(request, RequestBody.fromBytes(data));
+    }
+
+    @Override
+    public void delete(String fileName) throws IOException {
+        s3Client.deleteObject(builder -> builder.bucket(bucketName).key(FILE_PREFIX + fileName));
     }
 }

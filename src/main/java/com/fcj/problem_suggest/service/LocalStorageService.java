@@ -24,4 +24,16 @@ public class LocalStorageService implements StorageService {
         Path targetPath = uploadPath.resolve(Objects.requireNonNull(file.getOriginalFilename()));
         Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
     }
+
+    @Override
+    public void saveBytes(byte[] data, String fileName) throws IOException {
+        Path targetPath = uploadPath.resolve(fileName);
+        Files.write(targetPath, data);
+    }
+
+    @Override
+    public void delete(String fileName) throws IOException {
+        Path targetPath = uploadPath.resolve(fileName);
+        Files.deleteIfExists(targetPath);
+    }
 }
