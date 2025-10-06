@@ -17,7 +17,7 @@ public class S3StorageService implements StorageService {
 
     private static final String FILE_PREFIX = "input/";
     
-    @Value("${AWS_S3_BUCKET}")
+    @Value("${aws.s3.bucket}")
     private String bucketName;
 
     public S3StorageService(S3Client s3Client) {
