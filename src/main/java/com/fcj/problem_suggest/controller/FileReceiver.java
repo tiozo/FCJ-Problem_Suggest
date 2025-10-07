@@ -1,5 +1,7 @@
 package com.fcj.problem_suggest.controller;
 
+import com.fcj.problem_suggest.service.FileProcessor;
+import com.fcj.problem_suggest.service.PdfService;
 import com.fcj.problem_suggest.service.PdfSniper;
 import com.fcj.problem_suggest.service.StorageService;
 import org.slf4j.Logger;
@@ -15,11 +17,13 @@ import java.util.List;
 public class FileReceiver {
     private final Logger logger = org.slf4j.LoggerFactory.getLogger(FileReceiver.class);
     private final StorageService ss;
+    private final FileProcessor fp;
     private final PdfSniper pdfSniper;
 
-    public FileReceiver (StorageService ss, PdfSniper pdfSniper) {
+    public FileReceiver (StorageService ss, PdfSniper pdfSniper, PdfService ps) {
         this.ss = ss;
         this.pdfSniper = pdfSniper;
+        this.fp = ps;
     }
 
     private static final List<String> ALLOWED_TYPES = Arrays.asList(

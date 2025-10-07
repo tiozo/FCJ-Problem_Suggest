@@ -36,6 +36,17 @@ public class S3StorageService implements StorageService {
     }
 
     @Override
+    public void saveCustomPrefix(MultipartFile file, String prefix) throws IOException {
+        PutObjectRequest request = PutObjectRequest.builder()
+            .bucket(bucketName)
+            .key(prefix + file.getOriginalFilename())
+            .contentType(file.getContentType())
+            .build();
+
+        s3Client.putObject(request, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+    }
+
+    @Override
     public void saveBytes(byte[] data, String fileName) throws IOException {
         PutObjectRequest request = PutObjectRequest.builder()
             .bucket(bucketName)
