@@ -2,13 +2,34 @@ package com.fcj.problem_suggest.mapper;
 
 import com.fcj.problem_suggest.dto.FigureDto;
 import com.fcj.problem_suggest.model.Figure;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper
-public interface FigureMapper {
-    FigureMapper INSTANCE = Mappers.getMapper(FigureMapper.class);
+@Component
+public class FigureMapper {
+    
+    public static final FigureMapper INSTANCE = new FigureMapper();
 
-    Figure toEntity(FigureDto object);
-    FigureDto toDto(Figure object);
+    public Figure toEntity(FigureDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        
+        Figure entity = new Figure();
+        entity.setId(dto.getId());
+        entity.setMetadata(dto.getMetadata());
+        // Note: Statement reference should be set by the service layer
+        return entity;
+    }
+
+    public FigureDto toDto(Figure entity) {
+        if (entity == null) {
+            return null;
+        }
+        
+        FigureDto dto = new FigureDto();
+        dto.setId(entity.getId());
+        dto.setStatementId(entity.getStatement() != null ? entity.getStatement().getId() : null);
+        dto.setMetadata(entity.getMetadata());
+        return dto;
+    }
 }

@@ -18,15 +18,14 @@ import java.util.UUID;
 @Table(name = "figure")
 public class Figure {
     @Id
-    @Column(name = "statement_id")
-    private UUID statementId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "metadata", columnDefinition = "JSON")
     private FigureMetadata metadata;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @MapsId
-    @JoinColumn(name = "statement_id")
+    @JoinColumn(name = "statement_id", unique = true)
     private Statement statement;
 }

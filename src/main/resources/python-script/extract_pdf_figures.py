@@ -49,16 +49,15 @@ def extract_figures(pdf_path):
                         merged_rect = merged_rect | rect
                 
                 # Extract if it's a significant figure
-                if merged_rect.width > 50 and merged_rect.height > 40:
-                    region = merged_rect + (-15, -15, 15, 15)
-                    pix = page.get_pixmap(matrix=fitz.Matrix(2, 2), clip=region)
+                if merged_rect.width > 50 and merged_rect.height > 50:
+                    pix = page.get_pixmap(matrix=fitz.Matrix(2, 2), clip=merged_rect)
                     output_path = os.path.join(output_dir, f"{figure_order}.png")
                     pix.save(output_path)
                     print(f"Extracted: {output_path}")
                     figure_order += 1
     
     doc.close()
-    return figure_order - 1
+    return pdf_name
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -66,13 +65,5 @@ if __name__ == "__main__":
         sys.exit(1)
     
     pdf_path = sys.argv[1]
-    if not os.path.exists(pdf_path):
-        print(f"Error: File {pdf_path} not found")
-        sys.exit(1)
-    
-    try:
-        total_figures = extract_figures(pdf_path)
-        print(f"SUCCESS: Extracted {total_figures} figures")
-    except Exception as e:
-        print(f"ERROR: {str(e)}")
-        sys.exit(1)
+    pdf_name = extract_figures(pdf_path)
+    print(f"Figures extracted to: {pdf_name}/")

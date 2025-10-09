@@ -1,7 +1,6 @@
 package com.fcj.problem_suggest.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +13,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "Statement")
 @Table(name = "statement")
 public class Statement {
@@ -23,14 +21,13 @@ public class Statement {
     @Column(name = "id", nullable = false, columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "text", nullable = false, columnDefinition = "NVARCHAR(1000)")
+    @Column(name = "text", nullable = false, columnDefinition = "NVARCHAR(2000)")
     private String text;
 
-    @Column(name = "answer", nullable = false, columnDefinition = "NVARCHAR(500)")
+    @Column(name = "answer", columnDefinition = "NVARCHAR(1000)")
     private String answer;
 
-    @OneToOne(mappedBy = "statement", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "statement", cascade = CascadeType.ALL, orphanRemoval = true)
     private Figure figure;
 
     @ManyToMany(

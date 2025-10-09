@@ -2,13 +2,34 @@ package com.fcj.problem_suggest.mapper;
 
 import com.fcj.problem_suggest.dto.TagDto;
 import com.fcj.problem_suggest.model.Tag;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper
-public interface TagMapper {
-    TagMapper INSTANCE = Mappers.getMapper(TagMapper.class);
+@Component
+public class TagMapper {
+    
+    public static final TagMapper INSTANCE = new TagMapper();
 
-    Tag toEntity(TagDto object);
-    TagDto toDto(Tag object);
+    public Tag toEntity(TagDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        
+        Tag entity = new Tag();
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        // Note: statements relationship handled separately to avoid circular references
+        return entity;
+    }
+
+    public TagDto toDto(Tag entity) {
+        if (entity == null) {
+            return null;
+        }
+        
+        TagDto dto = new TagDto();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        // Note: statements relationship handled separately to avoid circular references
+        return dto;
+    }
 }
