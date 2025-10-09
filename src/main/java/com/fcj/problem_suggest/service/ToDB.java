@@ -1,18 +1,22 @@
 package com.fcj.problem_suggest.service;
 
+import com.fcj.problem_suggest.dto.StatementDto;
+import com.fcj.problem_suggest.service.data.StatementService;
 import org.springframework.stereotype.Service;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-public class ToQdrant implements MarkdownProcessor {
+public class ToDB implements MarkdownProcessor {
     
     private final EmbeddingService embeddingService;
     private final QdrantService qdrantService;
+    private final StatementService statementService;
     
-    public ToQdrant(EmbeddingService embeddingService, QdrantService qdrantService) {
+    public ToDB(EmbeddingService embeddingService, QdrantService qdrantService, StatementService statementService) {
         this.embeddingService = embeddingService;
         this.qdrantService = qdrantService;
+        this.statementService = statementService;
     }
     
     public void process(String markdown) {
@@ -30,8 +34,21 @@ public class ToQdrant implements MarkdownProcessor {
                 String problemAnswer = extractAnswerChoices(questionContent);
                 
                 if (!problemStatement.isEmpty()) {
-                    float[] vector = embeddingService.embedStatement(problemStatement);
-                    qdrantService.addPoint(vector, problemStatement, problemAnswer);
+                    // Check if problem already exists in main DB
+                    String answerToCheck = problemAnswer.isEmpty() ? null : problemAnswer;
+                    if (!statementService.existsByTextAndAnswer(problemStatement, answerToCheck)) {
+                        // Save to main DB first
+                        StatementDto statementDto = new StatementDto();
+                        statementDto.setText(problemStatement);
+                        statementDto.setAnswer(problemAnswer.isEmpty() ? null : problemAnswer);
+                        StatementDto savedStatement = statementService.save(statementDto);
+                        
+                        // Then add to Qdrant with same UUID
+                        float[] vector = embeddingService.embedStatement(problemStatement);
+                        qdrantService.addPoint(vector, problemStatement, savedStatement.getId());
+                    }
+                } else {
+                    throw new RuntimeException("Failed to extract problem statement from markdown");
                 }
             }
         } catch (Exception e) {

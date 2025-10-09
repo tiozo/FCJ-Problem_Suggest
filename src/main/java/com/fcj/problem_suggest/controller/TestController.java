@@ -1,7 +1,7 @@
 package com.fcj.problem_suggest.controller;
 
 import com.fcj.problem_suggest.service.MarkdownProcessor;
-import com.fcj.problem_suggest.service.ToQdrant;
+import com.fcj.problem_suggest.service.ToDB;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -21,11 +20,11 @@ public class TestController {
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(TestController.class);
     private final MarkdownProcessor mdp;
 
-    public TestController(ToQdrant mdp) {
+    public TestController(ToDB mdp) {
         this.mdp = mdp;
     }
 
-    private static final List<String> ALLOWED_TYPES = Arrays.asList(
+    private static final List<String> ALLOWED_TYPES = List.of(
             "text/markdown"
     );
 
